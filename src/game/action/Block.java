@@ -8,6 +8,7 @@ public class Block extends Action {
     private int wallDir;
 
     public Block(Player player, int wallPos, int wallDir) {
+        super(ActionType.BLOCK);
         this.player = player;
         this.wallPos = wallPos;
         this.wallDir = wallDir;

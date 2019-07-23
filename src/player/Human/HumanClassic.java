@@ -3,8 +3,6 @@ package player.Human;
 import java.util.Scanner;
 
 public class HumanClassic extends Human {
-
-
     public HumanClassic(String name, int pieceId, boolean turn, boolean isHuman, int cntBlock) {
         super(name, pieceId, turn, isHuman, cntBlock);
     }

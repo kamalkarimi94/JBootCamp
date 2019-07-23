@@ -15,6 +15,7 @@ public class ClassicGame extends Game {
     private Board board;
     private Player playerOne;
     private Player playerTwo;
+    private ValidateAct validateAct = new ValidateAct();
 
     private int ActPrint(Player player) {
         if (player.isHuman()){
@@ -151,7 +152,6 @@ public class ClassicGame extends Game {
 
     @Override
     public void run() {
-        ValidateAct validateAct = new ValidateAct();
         int turn = 0 ;
         int act = 0;
         Action action = null;
@@ -185,7 +185,7 @@ public class ClassicGame extends Game {
     private int nextMove(ValidateAct act , Action action){
         int result = 0;
         if (act.checkMove(board, (Move) action) == 1) {
-            board.changePositionPieceOnBoard(((Move) action).getPlayer().getPieceId(), ((Move) action).getPos2());
+            board.changePositionPieceOnBoard(((Move) action).getPlayer().getPieceId(), ((Move) action).getNextPos());
             result = 1;
         } else if (act.checkMove(board, (Move) action) == 2) {
             moveToLeftOrRight(board, (Move) action, MoveSelectBetweenRightAndLeft(((Move) action).getPlayer()));

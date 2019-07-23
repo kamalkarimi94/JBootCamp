@@ -1,5 +1,7 @@
 package player;
 
+import game.action.Action;
+
 public abstract class Player {
 
     private String name;
@@ -17,7 +19,7 @@ public abstract class Player {
     }
 
     public abstract int nextMoveLeftOrRight();
-    public abstract int nextAction();
+    public abstract Action nextAction();
     public boolean isTurn() {
         return turn;
     }
