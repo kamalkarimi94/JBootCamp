@@ -1,14 +1,17 @@
 package game;
 
 import board.Board;
+import game.action.Action;
+import game.action.ActionType;
 import game.action.Block;
 import game.action.Move;
 import player.Player;
 
 public class ValidateAct {
 
-    public int checkMove(Board board, Move action) {
-        Player player = action.getPlayer();
+    //checkMove handel return!!!!
+    private boolean checkMove(Board board, Move action) {
+       /* Player player = action.getPlayer();
         String dir = action.getDirection();
         int pos1 = board.getPiece(player.getPieceId()).getPosition();
         int result = 0;
@@ -22,8 +25,8 @@ public class ValidateAct {
             } else if (dir.equals("L") && dir != null) {
                 result = selectMove(board, action, pos1, 1, 9);
             }
-        }
-        return result;
+        }*/
+        return false;
     }
 
     private boolean isPositionInsideTheRange(int pos) {
@@ -164,6 +167,15 @@ public class ValidateAct {
 
                 }
             }
+        }
+        return false;
+    }
+
+    boolean checkAct(Action action,WorldModel worldModel) {
+        if (action.getActionType()== ActionType.MOVE){
+            return checkMove(worldModel.getBoard(),(Move) action);
+        }else if (action.getActionType() == ActionType.BLOCK){
+
         }
         return false;
     }

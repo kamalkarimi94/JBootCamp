@@ -1,20 +1,42 @@
 package player.Human;
 
+import board.Board;
+import game.WorldModel;
+import game.action.Action;
+import game.action.Block;
+import game.action.Move;
+
 import java.util.Scanner;
 
 public class HumanClassic extends Human {
-    public HumanClassic(String name, int pieceId, boolean turn, boolean isHuman, int cntBlock) {
-        super(name, pieceId, turn, isHuman, cntBlock);
+    private Action action;
+    //private WorldModel worldModel;
+    //private Board board;
+    HumanClassic(String name) {
+        super(name);
     }
 
     @Override
-    public int nextAction() {
+    public Action nextAction(WorldModel worldModel) {
         Scanner scanner = new Scanner(System.in);
         int act = scanner.nextInt();
-        return act;
+        System.out.println("enter position:");
+        int position;
+        if (act==1){
+            position = scanner.nextInt();
+            action = new Move(worldModel.getCurrentPosition(),position);
+        }else if (act==2){
+            position = scanner.nextInt();
+            System.out.println("enter direction:");
+            System.out.println("1. horizontal");
+            System.out.println("2. vertical");
+            int direction = scanner.nextInt();
+            action = new Block(position,direction);
+        }
+        return action;
     }
 
-    @Override
+    /*@Override
     public int nextMove() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -61,5 +83,5 @@ public class HumanClassic extends Human {
             else
                 System.out.println("Enter valid direction");
         }
-    }
+    }*/
 }

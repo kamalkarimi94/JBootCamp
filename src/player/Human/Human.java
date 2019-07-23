@@ -1,27 +1,29 @@
 package player.Human;
 
+import game.WorldModel;
+import game.action.Action;
 import player.Player;
 
 public abstract class Human extends Player {
 
 
-    public Human(String name, int pieceId, boolean turn, boolean isHuman, int cntBlock) {
-        super(name, pieceId, turn, isHuman, cntBlock);
+    Human(String name) {
+        super(name);
     }
 
     @Override
-    public abstract int nextAction() ;
+    public abstract Action nextAction(WorldModel worldModel) ;
 
-    @Override
+/*    @Override
     public abstract int nextMove();
 
     @Override
     public abstract int blocking() ;
 
     @Override
-    public abstract int blockPos();
+    public abstract int blockPos()*/;
 
-    @Override
-    public abstract int nextMoveLeftOrRight();
+  /*  @Override
+    public abstract int nextMoveLeftOrRight();*/
 
 }
