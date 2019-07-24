@@ -3,6 +3,9 @@ import game.*;
 
 public class Main {
 
+
+
+
     public static void main(String[] args) {
         Main m = new Main();
         Game game = null;
@@ -29,9 +32,5 @@ public class Main {
             else
                 System.out.println("Enter valid type");
         }
-
-
-
-        
     }
 }
