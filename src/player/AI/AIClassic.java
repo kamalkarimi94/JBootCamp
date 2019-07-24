@@ -1,21 +1,18 @@
 package player.AI;
 
+import game.WorldModel;
+import game.action.Action;
+
 import java.util.Random;
 
 public class AIClassic extends AI {
     private Random random;
-    public AIClassic(String name, int pieceId, boolean turn, boolean isHuman, int cntBlock) {
-        super(name, pieceId, turn, isHuman, cntBlock);
+    public AIClassic(String name) {
+        super(name);
         random  = new Random();
     }
 
-    @Override
-    public int nextAction() {
-        int act = random.nextInt(2);
-        return ++act;
-    }
-
-    @Override
+   /* @Override
     public int nextMove() {
         int act = random.nextInt(4);
         return ++act;
@@ -37,5 +34,10 @@ public class AIClassic extends AI {
     public int nextMoveLeftOrRight() {
         int dir = random.nextInt(2);
         return dir+3;
+    }*/
+
+    @Override
+    public Action nextAction(WorldModel worldModel) {
+        return null;
     }
 }

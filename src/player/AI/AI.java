@@ -1,22 +1,24 @@
 package player.AI;
 
+import game.WorldModel;
+import game.action.Action;
 import player.Player;
 
 public abstract class AI extends Player{
 
-    public AI(String name, int pieceId, boolean turn, boolean isHuman, int cntBlock) {
-        super(name, pieceId, turn, isHuman, cntBlock);
+    public AI(String name) {
+        super(name);
     }
 
     @Override
-    public abstract int nextAction();
+    public abstract Action nextAction(WorldModel worldModel);
 
-    @Override
+   /* @Override
     public abstract int nextMove() ;
 
     @Override
     public abstract int blocking() ;
 
     @Override
-    public abstract int nextMoveLeftOrRight() ;
+    public abstract int nextMoveLeftOrRight() ;*/
 }

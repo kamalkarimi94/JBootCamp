@@ -47,7 +47,7 @@ public class TournamentClassic extends Tournament {
     }
 
     @Override
-    public boolean evaluate(Board board) {
+    public boolean evaluate(WorldModel worldModel) {
         return false;
     }
 
