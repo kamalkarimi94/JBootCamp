@@ -12,7 +12,7 @@ public class HumanClassic extends Human {
     private Action action;
     //private WorldModel worldModel;
     //private Board board;
-    HumanClassic(String name) {
+    public HumanClassic(String name) {
         super(name);
     }
 
@@ -24,7 +24,7 @@ public class HumanClassic extends Human {
         int position;
         if (act==1){
             position = scanner.nextInt();
-            action = new Move(worldModel.getCurrentPosition(),position);
+            action = new Move(worldModel.getCurrentPosition(worldModel.getTurn()%2),position);
         }else if (act==2){
             position = scanner.nextInt();
             System.out.println("enter direction:");

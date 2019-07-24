@@ -27,5 +27,5 @@ public abstract class Tournament extends Game {
     public abstract void run();
 
     @Override
-    public abstract boolean evaluate(Board board);
+    public abstract boolean evaluate(WorldModel worldModel);
 }

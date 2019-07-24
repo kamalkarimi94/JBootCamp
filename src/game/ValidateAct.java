@@ -52,7 +52,7 @@ public class ValidateAct {
         return flag;
     }
 
-    private int selectMove(Board board, Move action, int x, int y, int z) {
+   /* private int selectMove(Board board, Move action, int x, int y, int z) {
         int result = -1;
         int i = -1;
         if (isPositionInsideTheRange(x - y)) {
@@ -124,16 +124,16 @@ public class ValidateAct {
             result = 1;
         }
         return result;
-    }
+    }*/
 
-    private int complexJumpLeft(Board board, Move action, int x, int y, int z) {
+    /*private int complexJumpLeft(Board board, Move action, int x, int y, int z) {
         int result = -1;
         if (board.isEdgeBetween(x - y, x - y + z)) {
             action.setNextPos(x - y + z);
             result = 1;
         }
         return result;
-    }
+    }*/
 
     private int isRightVertexEmpty(int x, int y, int z) {
         int result = -1;
@@ -152,7 +152,7 @@ public class ValidateAct {
         return result;
     }
 
-    boolean checkBlock(Board board, Block action) {
+   /* boolean checkBlock(Board board, Block action) {
         int start = action.getWallPos();
         if (action.getPlayer().getCntBlock() > 0) {
             if (start > 8 && start < 80 && (start + 1) % 9 != 0) {
@@ -169,7 +169,7 @@ public class ValidateAct {
             }
         }
         return false;
-    }
+    }*/
 
     boolean checkAct(Action action,WorldModel worldModel) {
         if (action.getActionType()== ActionType.MOVE){

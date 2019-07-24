@@ -25,5 +25,5 @@ public abstract class Game {
 
     public abstract void run();
 
-    public abstract boolean evaluate(Board board);
+    public abstract boolean evaluate(WorldModel worldModel);
 }

@@ -5,9 +5,23 @@ import game.action.Action;
 import game.action.ActionType;
 
 public class WorldModel implements Cloneable{
-    Board board;
+    private Board board;
+    private int turn;
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
     Board getBoard(){
         return null;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     public int getCurrentPosition(int id){
@@ -19,12 +33,6 @@ public class WorldModel implements Cloneable{
         return super.clone();
     }
 
-    void execute(int id,Action action){
-        board = getBoard();
-        if (action.getActionType()== ActionType.MOVE){
-            board.changePositionPieceOnBoard(id,action.getPosition());
-        }else if (action.getActionType() == ActionType.BLOCK){
-            //add Wall
-        }
-    }
+
+
 }
