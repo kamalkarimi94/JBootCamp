@@ -9,7 +9,7 @@ public class Move extends Action {
         this.currentPosition = currentPosition;
     }
 
-    public int getPosition() {
+    public int getCurrentPosition() {
         return currentPosition;
     }
 }

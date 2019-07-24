@@ -7,17 +7,38 @@ import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Board {
 
     private Graph<Integer, DefaultEdge> graph;
-    private int cntWalls;
-    private int cntPieces;
     private ArrayList<Cell> cells;
     private ArrayList<Wall> walls;
     private ArrayList<Piece> pieces;
-
     private int cnt = 0;
+    private int cntWalls;
+    private int cntPieces;
+
+
+    public void setCntWalls(int cntWalls) {
+        this.cntWalls = cntWalls;
+    }
+
+    public int getCntWalls() {
+        return cntWalls;
+    }
+
+    public void setCntPieces(int cntPieces) {
+        this.cntPieces = cntPieces;
+    }
+
+    public void setCells(ArrayList<Cell> cells) {
+        this.cells = cells;
+    }
+
+    public void setWalls(ArrayList<Wall> walls) {
+        this.walls = walls;
+    }
 
     public Board(int cntPieces, int cntWalls) {
         this.graph = new DefaultUndirectedGraph<>(DefaultEdge.class);
@@ -90,8 +111,8 @@ public class Board {
     }
 
     private void initialPieces() {
-        pieces.add(new Piece(4, "#000", 1));
-        pieces.add(new Piece(76, "#100", 2));
+        pieces.add(new Piece(67, "#000", 0));
+        pieces.add(new Piece(76, "#100", 1));
         for (int i = 0; i < cells.size(); i++) {
             if (cells.get(i).getPosition() == pieces.get(0).getPosition()) {
                 cells.get(i).setFill(1);
@@ -99,6 +120,26 @@ public class Board {
                 cells.get(i).setFill(1);
             }
         }
+    }
+
+    public void setPieces(ArrayList<Piece> pieces) {
+        this.pieces = pieces;
+    }
+
+    public int getCntPieces() {
+        return cntPieces;
+    }
+
+    public ArrayList<Cell> getCells() {
+        return cells;
+    }
+
+    public ArrayList<Wall> getWalls() {
+        return walls;
+    }
+
+    public ArrayList<Piece> getPieces() {
+        return pieces;
     }
 
     private void initialWall() {
@@ -235,6 +276,18 @@ public class Board {
         return result;
     }
 
+    public boolean isCellAdjWith(int currentposition , int nextPosition){
+        for (Cell c: cells) {
+            if (c.getPosition() == currentposition){
+                Cell []cAdj = c.getCells();
+                for (int i=0 ;i<4 ; i++){
+                    if (cAdj[i].getPosition() == nextPosition)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
     public boolean isPathExcept(int pos1, int pos2, int start, int end, int dir) {
         boolean result = false;
         Graph<Integer, DefaultEdge> graph = getGraph();
@@ -261,7 +314,6 @@ public class Board {
 
         return result;
     }
-
 
     public Wall getWall(int position) {
         Wall w = new Wall(-1, null, 'H');

@@ -1,35 +1,30 @@
 package game;
 
-import board.*;
+import board.Board;
 import game.action.Action;
 import game.action.ActionType;
-import game.action.Block;
-import game.action.Move;
 import player.AI.AIClassic;
+import player.Human.Human;
 import player.Human.HumanClassic;
-import player.*;
+import player.Player;
 
 import java.util.Scanner;
 
-public class ClassicGame extends Game {
+public class GameClassic extends Game {
 
     private Board board;
     private WorldModel worldModel;
-   // private int turn = 0;
     private Player playerOne;
     private Player playerTwo;
     private ValidateAct validateAct = new ValidateAct();
 
-    /*private int ActPrint(Player player) {
-        if (player.isHuman()){
+    private void ActPrint(Player player) {
+        if (player instanceof Human) {
             System.out.println("select your action: (" + player.getName() + ")");
             System.out.println("1. Move");
             System.out.println("2. Block");
         }
-        return player.nextAction();
-
     }
-*/
  /*   private int MoveSelectBetweenRightAndLeft(Player player) {
         if (player.isHuman()){
             System.out.println("select direction between right and left:");
@@ -103,16 +98,16 @@ public class ClassicGame extends Game {
         }
     }*/
 
-    private int startUpMenu(){
+    private int startUpMenu() {
         Scanner scanner = new Scanner(System.in);
-        while (true){
+        while (true) {
             System.out.println("\n\nSelect game mode:");
             System.out.println("1. Human VS Human");
             System.out.println("2. Human VS AI");
             System.out.println("3. AI VS Human");
             System.out.println("4. AI VS AI");
             int mode = scanner.nextInt();
-            if (mode>0 && mode<5)
+            if (mode > 0 && mode < 5)
                 return mode;
             else
                 System.out.println("Invalid mode");
@@ -120,9 +115,9 @@ public class ClassicGame extends Game {
 
     }
 
-    private void initialPlayerMode(int walls){
+    private void initialPlayerMode() {
         int select = startUpMenu();
-        switch (select){
+        switch (select) {
             case 1:
                 playerOne = new HumanClassic("player1");
                 playerTwo = new HumanClassic("player2");
@@ -145,10 +140,14 @@ public class ClassicGame extends Game {
     @Override
     public void setup() {
         int walls = 40;
-        board = worldModel.getBoard();
+        board = new Board(2, walls);
         board.createBoard();
         worldModel = new WorldModel();
-        initialPlayerMode(walls);
+        worldModel.setBoard(board);
+        worldModel.getBoard().getPieces().forEach(piece -> {
+            worldModel.setRemindWall(piece.getId());
+        });
+        initialPlayerMode();
         System.out.println();
         board.showBoard();
     }
@@ -158,42 +157,26 @@ public class ClassicGame extends Game {
         int turn = worldModel.getTurn();
         Action action;
         do {
-            //worldModel = new WorldModel();
-            if (turn%2==0) {
+
+            if (turn % 2 == 0) {
+                ActPrint(playerOne);
                 action = playerOne.nextAction(worldModel);
-                if(validateAct.checkAct(action,worldModel)){
-                    execute(turn%2,action);
-                    turn++;
+                if (validateAct.checkAct(action, worldModel)) {
+                    execute(turn % 2, action);
+                    worldModel.setTurn(++turn);
+                } else {
+                    System.out.println("Wrong action!");
                 }
-            }else if (turn%2==1){
+            } else if (turn % 2 == 1) {
+                ActPrint(playerTwo);
                 action = playerTwo.nextAction(worldModel);
-                if(validateAct.checkAct(action,worldModel)){
-                    execute(turn%2,action);
-                    turn++;
+                if (validateAct.checkAct(action, worldModel)) {
+                    execute(turn % 2, action);
+                    worldModel.setTurn(++turn);
+                } else {
+                    System.out.println("Wrong action!");
                 }
             }
-                //act = ActPrint(playerOne);
-                //action = checkAct(playerOne, act);
-//                if (act == 1) {
-//                    turn = nextMove(validateAct,action);
-//                    switchTurn(playerOne,playerTwo,turn);
-//                } else if (act == 2) {
-//                    turn = insertBlock(validateAct,action);
-//                    switchTurn(playerOne,playerTwo,turn);
-//                }
-//                showGamePlaneAndMessage(turn,playerOne);
-//            } else {
-//                 act = ActPrint(playerTwo);
-//                 action = checkAct(playerTwo, act);
-//                if (act == 1) {
-//                    turn = nextMove(validateAct,action);
-//                    switchTurn(playerOne,playerTwo,turn);
-//                } else if (act == 2) {
-//                    turn = insertBlock(validateAct,action);
-//                    switchTurn(playerOne,playerTwo,turn);
-//                }
-//                showGamePlaneAndMessage(turn,playerTwo);
-//            }
         } while (!evaluate(worldModel));
     }
 
@@ -283,27 +266,27 @@ public class ClassicGame extends Game {
     public boolean evaluate(WorldModel worldModel) {
         Board board = worldModel.getBoard();
         for (int i = 0; i < 9; i++) {
-            if (board.isPathBetween(worldModel.getCurrentPosition(1),i)){
+            if (board.isPathBetween(worldModel.getCurrentPosition(1), i)) {
                 if (worldModel.getCurrentPosition(1) == i) {
                     setWinPlayer(playerTwo);
                     System.out.println(playerTwo.getName() + " Won!!!");
                     return true;
                 }
-            }else {
+            } else {
                 setWinPlayer(playerTwo);
                 System.out.println(playerTwo.getName() + " Won!!!");
                 return true;
             }
         }
         for (int i = 72; i < 81; i++) {
-            if (board.isPathBetween(worldModel.getCurrentPosition(0),i)){
+            if (board.isPathBetween(worldModel.getCurrentPosition(0), i)) {
                 if (worldModel.getCurrentPosition(0) == i) {
                     setWinPlayer(playerOne);
                     System.out.println(playerOne.getName() + " Won!!!");
                     return true;
                 }
 
-            }else {
+            } else {
                 setWinPlayer(playerOne);
                 System.out.println(playerOne.getName() + " Won!!!");
                 return true;
@@ -312,11 +295,12 @@ public class ClassicGame extends Game {
         return false;
     }
 
-    private void execute(int id, Action action){
+    private void execute(int id, Action action) {
         board = worldModel.getBoard();
-        if (action.getActionType()== ActionType.MOVE){
-            board.changePositionPieceOnBoard(id,action.getPosition());
-        }else if (action.getActionType() == ActionType.BLOCK){
+        if (action.getActionType() == ActionType.MOVE) {
+            board.changePositionPieceOnBoard(id, action.getPosition());
+            board.showBoard();
+        } else if (action.getActionType() == ActionType.BLOCK) {
             //add Wall
         }
         worldModel.setBoard(board);

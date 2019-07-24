@@ -10,8 +10,6 @@ import java.util.Scanner;
 
 public class HumanClassic extends Human {
     private Action action;
-    //private WorldModel worldModel;
-    //private Board board;
     public HumanClassic(String name) {
         super(name);
     }

@@ -11,7 +11,7 @@ public class Main {
         Game game = null;
         int type = m.startUpMenu();
         if (type==1){
-            game = new ClassicGame();
+            game = new GameClassic();
         }else if (type==2)
             game = new TournamentClassic();
         game.setup();

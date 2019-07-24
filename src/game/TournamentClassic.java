@@ -1,6 +1,5 @@
 package game;
 
-import board.Board;
 import player.Player;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class TournamentClassic extends Tournament {
     private void initialTournament(){
         ArrayList<Game> game = getTournament();
         for (int i=0 ; i<getGameCnt() ; i++ ){
-            game.add(new ClassicGame());
+            game.add(new GameClassic());
         }
     }
 
