@@ -1,14 +1,17 @@
 package game;
 
 import board.Board;
+import game.action.Action;
+import game.action.ActionType;
 import game.action.Block;
 import game.action.Move;
 import player.Player;
 
 public class ValidateAct {
 
-    public int checkMove(Board board, Move action) {
-        Player player = action.getPlayer();
+    //checkMove handel return!!!!
+    private boolean checkMove(Board board, Move action) {
+       /* Player player = action.getPlayer();
         String dir = action.getDirection();
         int pos1 = board.getPiece(player.getPieceId()).getPosition();
         int result = 0;
@@ -22,8 +25,8 @@ public class ValidateAct {
             } else if (dir.equals("L") && dir != null) {
                 result = selectMove(board, action, pos1, 1, 9);
             }
-        }
-        return result;
+        }*/
+        return false;
     }
 
     private boolean isPositionInsideTheRange(int pos) {
@@ -57,7 +60,7 @@ public class ValidateAct {
             if (!board.isPieceOnCellOfBoard(x - y) && !isPositionOnBoarderRange(x, action.getDirection())) {
                 if (isPositionInsideTheRange(x - 2 * y)) {
                     if (board.isEdgeBetween(x - y, x - 2 * y)) {
-                        action.setPos2(x - 2 * y);
+                        action.setNextPos(x - 2 * y);
                         result = simpleJump(board, action, x, y);
                         return result;
                     }
@@ -79,7 +82,7 @@ public class ValidateAct {
         int result = -1;
         if (board.isPieceOnCellOfBoard(x - y)
                 && board.isEdgeBetween(x, x - y)) {
-            action.setPos2(x - y);
+            action.setNextPos(x - y);
             result = 1;
         }
 
@@ -89,7 +92,7 @@ public class ValidateAct {
     private int simpleJump(Board board, Move action, int x, int y) {
         int result = -1;
         if (board.isEdgeBetween(x - y, x - 2 * y)) {
-            action.setPos2(x - 2 * y);
+            action.setNextPos(x - 2 * y);
             result = 1;
         }
 
@@ -103,11 +106,11 @@ public class ValidateAct {
             result = 2;
         } else if (board.isEdgeBetween(x - y, x - y - z) &&
                 !board.isEdgeBetween(x - y, x - y + z)) {
-            action.setPos2(x - y - z);
+            action.setNextPos(x - y - z);
             result = 1;
         } else if (!board.isEdgeBetween(x - y, x - y - z) &&
                 board.isEdgeBetween(x - y, x - y + z)) {
-            action.setPos2(x - y + z);
+            action.setNextPos(x - y + z);
             result = 1;
         }
 
@@ -117,7 +120,7 @@ public class ValidateAct {
     private int complexJumpRight(Board board, Move action, int x, int y, int z) {
         int result = -1;
         if (board.isEdgeBetween(x - y, x - y - z)) {
-            action.setPos2(x - y - z);
+            action.setNextPos(x - y - z);
             result = 1;
         }
         return result;
@@ -126,7 +129,7 @@ public class ValidateAct {
     private int complexJumpLeft(Board board, Move action, int x, int y, int z) {
         int result = -1;
         if (board.isEdgeBetween(x - y, x - y + z)) {
-            action.setPos2(x - y + z);
+            action.setNextPos(x - y + z);
             result = 1;
         }
         return result;
@@ -164,6 +167,15 @@ public class ValidateAct {
 
                 }
             }
+        }
+        return false;
+    }
+
+    boolean checkAct(Action action,WorldModel worldModel) {
+        if (action.getActionType()== ActionType.MOVE){
+            return checkMove(worldModel.getBoard(),(Move) action);
+        }else if (action.getActionType() == ActionType.BLOCK){
+
         }
         return false;
     }

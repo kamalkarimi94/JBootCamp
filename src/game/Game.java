@@ -5,6 +5,7 @@ import player.Player;
 
 public abstract class Game {
     private Player winPlayer;
+    private int turn;
     private Board board;
 
 
