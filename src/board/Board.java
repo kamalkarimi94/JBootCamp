@@ -111,7 +111,7 @@ public class Board {
     }
 
     private void initialPieces() {
-        pieces.add(new Piece(67, "#000", 0));
+        pieces.add(new Piece(4, "#000", 0));
         pieces.add(new Piece(76, "#100", 1));
         for (int i = 0; i < cells.size(); i++) {
             if (cells.get(i).getPosition() == pieces.get(0).getPosition()) {
@@ -346,6 +346,29 @@ public class Board {
         return p;
     }
 
+//    public void showBoard(){
+//        ArrayList<Piece> pieces = getPieces();
+//        Graph<Integer,DefaultEdge> graph = getGraph();
+//        boolean flag = true;
+//        for (Integer vertex:graph.vertexSet()){
+//            if ((vertex+1)%9==0 && vertex!=0){
+//                System.out.println();
+//            }
+//            for (int i=0;i<pieces.size();i++){
+//                flag = true;
+//                if (pieces.get(i).getPosition() == vertex){
+//                    System.out.print(" "+pieces.get(i).getId()+" ");
+//                    flag = false;
+//                }
+//            }
+//            if (flag)
+//                System.out.print(" * ");
+//            if (!graph.containsEdge(vertex, vertex + 1) && (vertex + 1) % 9 != 0 && vertex<79) {
+//                System.out.print(" # ");
+//            }
+//        }
+//    }
+
     public void showBoard() {
 
         ArrayList positions = new ArrayList<>();
@@ -393,5 +416,27 @@ public class Board {
         }
 
 
+    }
+
+    public void addWall(int start , int end){
+        Graph<Integer,DefaultEdge> graph = getGraph();
+        Cell[] adj1 ;
+        Cell[] adj2 ;
+        graph.removeEdge(start,end);
+        for (Cell cell: cells) {
+            adj1 = cell.getCells();
+            adj2 = cell.getCells();
+            for (int i=0 ; i<4 ; i++){
+                if (cell.getPosition() == start){
+                    if (adj1[i].getPosition() == end){
+                        adj1[i].setPosition(-1);
+                    }
+                }else if (cell.getPosition() == end){
+                    if (adj2[i].getPosition() == start){
+                        adj2[i].setPosition(-1);
+                    }
+                }
+            }
+        }
     }
 }

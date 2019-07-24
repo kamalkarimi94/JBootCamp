@@ -12,13 +12,4 @@ public abstract class AI extends Player{
 
     @Override
     public abstract Action nextAction(WorldModel worldModel);
-
-   /* @Override
-    public abstract int nextMove() ;
-
-    @Override
-    public abstract int blocking() ;
-
-    @Override
-    public abstract int nextMoveLeftOrRight() ;*/
 }

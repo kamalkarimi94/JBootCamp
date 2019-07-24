@@ -2,7 +2,6 @@ package game.action;
 
 public class Move extends Action {
     private int currentPosition;
-    private Direction direction;
 
     public Move(int currentPosition,int position) {
         super(ActionType.MOVE,position);

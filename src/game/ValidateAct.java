@@ -2,9 +2,7 @@ package game;
 
 import board.Board;
 import board.Piece;
-import game.action.Action;
-import game.action.ActionType;
-import game.action.Move;
+import game.action.*;
 
 public class ValidateAct {
 
@@ -83,16 +81,17 @@ public class ValidateAct {
         return result;
     }
 
-   /* boolean checkBlock(Board board, Block action) {
-        int start = action.getWallPos();
-        if (action.getPlayer().getCntBlock() > 0) {
+    private boolean checkBlock(WorldModel worldModel, Block action) {
+        int start = action.getPosition();
+        Board board = worldModel.getBoard();
+        if (worldModel.getReminderWall(worldModel.getTurn()%2)>0) {
             if (start > 8 && start < 80 && (start + 1) % 9 != 0) {
-                if (action.getWallDir() == 1) {
+                if (action.getDirection() == Direction.HORIZENTAL) {
                     if ((board.isEdgeBetween(start, start + 1)
                             || board.isEdgeBetween(start - 9, start - 8))
                             && board.isEdgeBetween(start + 1, start - 8))
                         return board.isEdgeBetween(start, start - 9);
-                } else if (action.getWallDir() == 2) {
+                } else if (action.getDirection() == Direction.VERTICAL) {
                     if ((board.isEdgeBetween(start, start - 9) || board.isEdgeBetween(start + 1, start - 8)) && board.isEdgeBetween(start - 9, start - 8))
                         return board.isEdgeBetween(start, start + 1);
 
@@ -100,7 +99,29 @@ public class ValidateAct {
             }
         }
         return false;
-    }*/
+    }
+
+/*   private boolean checkBlock(WorldModel worldModel, Block action){
+       boolean result = false;
+       int wallPosition = action.getPosition();
+       try {
+           Board board = worldModel.boardDeepCopy() ;
+           Direction wallDirection = action.getDirection();
+           if (worldModel.getReminderWall(worldModel.getTurn()%2)>0){
+               if (wallPosition<81 && wallPosition>8 && (wallPosition+1)%9 != 0){
+                       if ((board.isEdgeBetween(wallPosition,wallPosition-9) &&
+                               board.isEdgeBetween(wallPosition+1,wallPosition-8))&&(
+                            board.isEdgeBetween(wallPosition-9,wallPosition-8) &&
+                               board.isEdgeBetween(wallPosition,wallPosition+1))){
+                           result = true;
+                   }
+               }
+           }
+       } catch (CloneNotSupportedException e) {
+           System.out.println("Error in checkBlock()");
+       }
+       return result;
+   }*/
 
     boolean checkAct(Action action, WorldModel worldModel) {
         id = worldModel.getTurn()%2;
@@ -111,7 +132,7 @@ public class ValidateAct {
                 System.out.println("Board Clone not work!");
             }
         } else if (action.getActionType() == ActionType.BLOCK) {
-
+            return checkBlock(worldModel,(Block) action);
         }
         return false;
     }
