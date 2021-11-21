@@ -1,1 +1,1 @@
-# Quoridor is a 2 or 4-player intuitive strategy game designed by Mirko Marchesi and published by Gigamic Games. Quoridor received the Mensa Mind Game award in 1997 and the Game Of The Year in the USA, France,
+# Quoridor is a 2 or 4-player intuitive strategy game designed by Mirko Marchesi and published by Gigamic Games.
